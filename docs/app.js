@@ -31,3 +31,32 @@ document.querySelector('button').addEventListener('click', async () => {
     const outputValue = await convert(inputValue, inputCurrency, outputCurrency);
     document.querySelector('[name="output-value"]').value = round(outputValue, 2);
 });
+
+// Installation prompt
+
+const prompt = document.querySelector(`article`)
+let deferredPrompt
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    prompt.style['display'] = 'block';
+});
+
+window.addEventListener('appinstalled', () => {
+    prompt.style['display'] = 'none';
+    deferredPrompt = null;
+});
+
+prompt.addEventListener('click', function (event) {
+    if (event.target.dataset.id == 'install-yes' && deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(result => {
+            console.log("result of user prompt", result);
+            prompt.style['display'] = 'none';
+            deferredPrompt = null;
+        });
+    } else {
+        prompt.style['display'] = 'none';
+    }
+});
