@@ -1,6 +1,6 @@
 // const fixerUri = 'https://data.fixer.io/api/latest?base=EUR&symbols=USD,SEK,CHF&access_key=API_KEY';
 const fixerUri = "fixer.json";
-
+const prompt = document.querySelector('#installprompt');
 
 async function convert(inputValue, inputCurrency, outputCurrency) {
     const response = await fetch(fixerUri);
@@ -33,7 +33,6 @@ document.querySelector('button').addEventListener('click', async () => {
 });
 
 // Installation prompt
-
 
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
