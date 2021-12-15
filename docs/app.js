@@ -34,9 +34,8 @@ document.querySelector('button').addEventListener('click', async () => {
 
 // Installation prompt
 
-const prompt = document.querySelector(`article`)
-let deferredPrompt
 
+let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
@@ -46,17 +45,35 @@ window.addEventListener('beforeinstallprompt', (e) => {
 window.addEventListener('appinstalled', () => {
     prompt.style['display'] = 'none';
     deferredPrompt = null;
+    updatePWADisplayMode();
 });
 
-prompt.addEventListener('click', function (event) {
+prompt.addEventListener('click', function(event) {
     if (event.target.dataset.id == 'install-yes' && deferredPrompt) {
         deferredPrompt.prompt();
         deferredPrompt.userChoice.then(result => {
             console.log("result of user prompt", result);
             prompt.style['display'] = 'none';
             deferredPrompt = null;
+            updatePWADisplayMode();
         });
     } else {
+        updatePWADisplayMode();
         prompt.style['display'] = 'none';
     }
 });
+
+updatePWADisplayMode();
+
+function updatePWADisplayMode() {
+    let displayMode = "browser";
+
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    if (document.referrer.startsWith('android-app://')) {
+        displayMode = 'twa'; // Trusted Web Activity
+    } else if (navigator.standalone || isStandalone) { // navigator.standalone iOS hack
+        displayMode = 'standalone';
+    }
+
+    document.querySelector('h1').textContent = `Calculator [${displayMode}]`;
+}
