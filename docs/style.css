@@ -39,3 +39,15 @@ button {
     width:100%;
     padding:8px;
 }
+
+div#installprompt {
+    display: none;
+    background: black;
+    color: white;
+    border-radius: 10px;
+    padding: 20px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+}
