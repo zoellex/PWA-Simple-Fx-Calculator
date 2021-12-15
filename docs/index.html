@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="FX-Calculator Demo PWA">
+    <title>Fx Calculator PWA</title>
+
+    <meta name="theme-color" content="#ccffcc">
+    <link rel="apple-touch-icon" href="icon192.png">
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.webmanifest">
+
+    <script src="app.js" async></script>
+</head>
+<body>
+    <main>
+        <h1>Fx Calculator</h1>
+        <section>
+            <label for="input-value">Input</label>
+            <input id="input-value" type="number" name="input-value">
+            <select title="Input Currency" name="input-currency"></select>
+        </section>
+        <section>
+            <label for="output-value">Output</label>
+            <input id="output-value" name="output-value" readonly>
+            <select title="Output Currency" id="output-currency" name="output-currency"></select>
+        </section>
+        <button>Calculate</button>
+    </main>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
+</body>
+</html>
